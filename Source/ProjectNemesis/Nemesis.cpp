@@ -4,6 +4,7 @@
 #include "Runtime/Engine/Classes/Components/MeshComponent.h"
 #include "Runtime/Engine/Classes/Components/ShapeComponent.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
+#include "Runtime/Engine/Classes/Components/ActorComponent.h"
 
 // Sets default values
 ANemesis::ANemesis()
@@ -40,6 +41,6 @@ void ANemesis::Tick(float DeltaTime)
 
 void ANemesis::OnPlayer(UPrimitiveComponent * overlap_primitive, AActor * in_actor, UPrimitiveComponent * in_primitive, int32 body_id, bool bFromSweep, const FHitResult & hit)
 {
-	return;
+	//return;
 }
 

@@ -24,15 +24,16 @@ ATalisman::ATalisman()
 // ATalisman overlap
 	shape->OnComponentBeginOverlap.AddDynamic(this, &ATalisman::OnPedestalEnter);
 	shape->AttachToComponent(root, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-// Material
-	current_mat = mesh->CreateDynamicMaterialInstance(0);
 }
 
 // Called when the game starts or when spawned
 void ATalisman::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	// Material
+
+	current_mat = mesh->CreateDynamicMaterialInstance(0);
+
 }
 
 // Called every frame
@@ -43,14 +44,35 @@ void ATalisman::Tick(float DeltaTime)
 
 	if (changed_color == true && current_mat != nullptr)
 	{
-		current_mat->SetScalarParameterValue(FName("ColorAmount"), 1.0f);
+		switch (color)
+		{
+		case None:
+			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 1.0f);
+			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 1.0f);
+			break;
+		case Purple:
+			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 0.0f);
+			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 1.0f);
+			break;
+		case Orange:
+			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 1.0f);
+			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 0.0f);
+			break;
+		}
 	}
 
 }
 
 void ATalisman::OnPedestalEnter(UPrimitiveComponent * overlap_primitive, AActor * in_actor, UPrimitiveComponent * in_primitive, int32 body_id, bool bFromSweep, const FHitResult & hit)
 {
-	//if (in_actor->ActorHasTag(FName("Pedestal")) == true)
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Screen Message"));
+	if (in_actor->ActorHasTag(FName("Pedestal_Purple")) == true) {
 		changed_color = true;
+		color = Purple;
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Purple, TEXT("Talisman is now Purple"));
+	}
+	else if (in_actor->ActorHasTag(FName("Pedestal_Orange")) == true) {
+		changed_color = true;
+		color = Orange;
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Orange, TEXT("Talisman is now Purple"));
+	}
 }

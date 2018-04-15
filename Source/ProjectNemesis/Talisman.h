@@ -40,5 +40,7 @@ public:
 	// --- TALISMAN PROPERTIES ----
 	TalismanColor color = None;
 	bool changed_color = false;
+
+	UPROPERTY(EditAnywhere)
 	UMaterialInstanceDynamic* current_mat;
 };

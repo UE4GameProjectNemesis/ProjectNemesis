@@ -14,5 +14,11 @@ class PROJECTNEMESIS_API ANemesisPatrolPoint : public ATargetPoint
 {
 	GENERATED_BODY()
 
-		
+	UPROPERTY(EditAnywhere, Category = Path)
+	int32 pathID = 0;
+
+public:
+	FORCEINLINE int32 GetPathID() const { return pathID; }
+	FORCEINLINE void SetPathID(int32 newID) { pathID = newID; }
+
 };

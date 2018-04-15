@@ -13,7 +13,7 @@ EBTNodeResult::Type UBT_SelectPatrolPoint::ExecuteTask(UBehaviorTreeComponent & 
 		// Get BB Component
 		UBlackboardComponent* BlackboardComp = AICon->GetBlackboardComponent();
 		ANemesisPatrolPoint* CurrentPoint = Cast<ANemesisPatrolPoint>(BlackboardComp->GetValueAsObject("LocationToGo"));
-		TArray<AActor*> AvailablePatrolPoints = AICon->GetPatrolPoints();
+		TArray<AActor*> AvailablePatrolPoints = AICon->GetPatrolPoints(AICon->GetCurrentPathID());
 		ANemesisPatrolPoint* NextPatrolPoint = nullptr;
 
 		if (AICon->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1) {

@@ -46,15 +46,15 @@ void ATalisman::Tick(float DeltaTime)
 	{
 		switch (color)
 		{
-		case None:
+		case ETalismanColor::NONE:
 			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 1.0f);
 			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 1.0f);
 			break;
-		case Purple:
+		case ETalismanColor::PURPLE:
 			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 0.0f);
 			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 1.0f);
 			break;
-		case Orange:
+		case ETalismanColor::ORANGE:
 			current_mat->SetScalarParameterValue(FName("Purple_Mat"), 1.0f);
 			current_mat->SetScalarParameterValue(FName("Orange_Mat"), 0.0f);
 			break;
@@ -67,12 +67,17 @@ void ATalisman::OnPedestalEnter(UPrimitiveComponent * overlap_primitive, AActor 
 {
 	if (in_actor->ActorHasTag(FName("Pedestal_Purple")) == true) {
 		changed_color = true;
-		color = Purple;
+		color = ETalismanColor::PURPLE;
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Purple, TEXT("Talisman is now Purple"));
 	}
 	else if (in_actor->ActorHasTag(FName("Pedestal_Orange")) == true) {
 		changed_color = true;
-		color = Orange;
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Orange, TEXT("Talisman is now Purple"));
+		color = ETalismanColor::ORANGE;
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Orange, TEXT("Talisman is now Orange"));
 	}
+}
+
+ETalismanColor ATalisman::GetTalismanColor() const
+{
+	return color;
 }

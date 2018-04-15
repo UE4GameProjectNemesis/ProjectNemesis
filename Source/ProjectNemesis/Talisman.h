@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Talisman.generated.h"
 
-enum TalismanColor { None = 0, Purple, Orange, Unkown };
+UENUM()
+enum class ETalismanColor : uint8 { NONE = 0, PURPLE, ORANGE, UNKNOWN };
 
 UCLASS()
 class PROJECTNEMESIS_API ATalisman : public AActor
@@ -33,12 +34,15 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		UShapeComponent* shape;
+
 	UFUNCTION()
 		void OnPedestalEnter(UPrimitiveComponent* overlap_primitive, AActor* in_actor, UPrimitiveComponent* in_primitive, int32 body_id, bool bFromSweep, const FHitResult& hit);
 
+	UFUNCTION()
+		ETalismanColor GetTalismanColor() const;
 
 	// --- TALISMAN PROPERTIES ----
-	TalismanColor color = None;
+	ETalismanColor color = ETalismanColor::NONE;
 	bool changed_color = false;
 
 	UPROPERTY(EditAnywhere)

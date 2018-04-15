@@ -23,6 +23,8 @@ class PROJECTNEMESIS_API ANemesisAIController : public AAIController
 		FName PlayerKey;
 
 	TArray<AActor*> PatrolPoints;
+	UPROPERTY(EditAnywhere, Category = Patrol)
+		int32 CurrentPathID = 0;
 
 	virtual void Possess(APawn* Pawn) override;
 
@@ -33,8 +35,11 @@ public:
 
 	void SetPlayerCaught(APawn* Pawn);
 
+	TArray<AActor*> GetPatrolPoints(int32 ID);
+
 	// Inline Getter Methods
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComp; }
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
-
+	FORCEINLINE int32 GetCurrentPathID() const { return CurrentPathID; }
+	FORCEINLINE void SetCurrentPathID(int32 newPathID) { CurrentPathID = newPathID; }
 };

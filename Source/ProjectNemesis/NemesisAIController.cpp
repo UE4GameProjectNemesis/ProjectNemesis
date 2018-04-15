@@ -27,6 +27,23 @@ void ANemesisAIController::SetPlayerCaught(APawn * Pawn)
 	}
 }
 
+TArray<AActor*> ANemesisAIController::GetPatrolPoints(int32 ID)
+{
+	TArray<AActor*> retPatrolPoints;
+
+	ANemesisPatrolPoint* pPoint = nullptr;
+	for (int i = 0; i < PatrolPoints.Num(); i++) {
+		pPoint = Cast<ANemesisPatrolPoint>(PatrolPoints[i]);
+		if (pPoint == nullptr) continue;
+		if (pPoint->GetPathID() == ID) {
+			retPatrolPoints.Add(pPoint);
+		}
+	}
+
+	return retPatrolPoints;
+
+}
+
 void ANemesisAIController::Possess(APawn * Pawn)
 {
 	Super::Possess(Pawn);

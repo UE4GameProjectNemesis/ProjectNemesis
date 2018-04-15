@@ -26,6 +26,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere, Category = AI)
+		class UBehaviorTree* BehaviorTree;
+
+	UPROPERTY(EditAnywhere, Category = AI)
+		class UPawnSensingComponent* PawnSensingComp;
+
+private:
+	UFUNCTION()
+		void OnPlayerCaught(APawn* Pawn);
 	
 	
 };

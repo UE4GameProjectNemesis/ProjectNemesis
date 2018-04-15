@@ -13,8 +13,6 @@ UCLASS()
 class PROJECTNEMESIS_API ANemesisPatrolPoint : public ATargetPoint
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+		
 };

@@ -50,22 +50,25 @@ void APortal_In::Tick(float DeltaTime)
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::White, TEXT("Talisman is White"));
 			break;
 		case ETalismanColor::PURPLE:
-			
 			UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Portal_Purple"), actors);
 			if (actors.Num() > 0)
 			{
-				UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), actors);
-				//play_actors[0]->SetActorLo
-				//play_actors[0]->SetActorLocationAndRotation(actors[0]->GetActorLocation(), actors[0]->GetActorRotation());
+				UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), play_actors);
 
+				FVector vec = actors[0]->GetActorLocation();
+				vec.Z += 12;
+				play_actors[0]->SetActorLocationAndRotation(vec, actors[0]->GetActorRotation());
 			}
 			break;
 		case ETalismanColor::ORANGE:
 			UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Portal_Orange"), actors);
 			if (actors.Num() > 0)
 			{
-				UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), actors);
-				//play_actors[0]->SetActorLocationAndRotation(actors[0]->GetActorLocation(), actors[0]->GetActorRotation());
+				UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Player"), play_actors);
+
+				FVector vec = actors[0]->GetActorLocation();
+				vec.Z += 12;
+				play_actors[0]->SetActorLocationAndRotation(vec, actors[0]->GetActorRotation());
 			}
 			break;
 		}

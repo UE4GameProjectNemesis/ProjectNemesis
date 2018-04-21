@@ -10,7 +10,6 @@ UCLASS()
 class PROJECTNEMESIS_API ANemesisCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
 public:
 	// Sets default values for this character's properties
 	ANemesisCharacter();
@@ -18,7 +17,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+private:
+	class ANemesisAIController* AIController = nullptr;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -35,6 +35,9 @@ public:
 private:
 	UFUNCTION()
 		void OnPlayerCaught(APawn* Pawn);
+
+	// Sensing ---
+	FVector PlayerLastKnownLocation;
 	
 	
 };

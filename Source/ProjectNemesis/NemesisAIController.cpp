@@ -27,6 +27,11 @@ void ANemesisAIController::SetPlayerCaught(APawn * Pawn)
 	}
 }
 
+void ANemesisAIController::SetPlayerLost()
+{
+	SetPlayerCaught(nullptr);
+}
+
 TArray<AActor*> ANemesisAIController::GetPatrolPoints(int32 ID)
 {
 	TArray<AActor*> retPatrolPoints;
@@ -42,6 +47,15 @@ TArray<AActor*> ANemesisAIController::GetPatrolPoints(int32 ID)
 
 	return retPatrolPoints;
 
+}
+
+UObject * ANemesisAIController::GetPlayerObject()
+{
+	if (BlackboardComp) {
+		return BlackboardComp->GetValueAsObject(PlayerKey);
+	}
+
+	return nullptr;
 }
 
 void ANemesisAIController::Possess(APawn * Pawn)

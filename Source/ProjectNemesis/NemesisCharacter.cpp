@@ -25,6 +25,8 @@ void ANemesisCharacter::BeginPlay()
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &ANemesisCharacter::OnPlayerCaught);
 	}
 
+	AIController = Cast<ANemesisAIController>(GetController());
+
 }
 
 // Called every frame
@@ -32,6 +34,15 @@ void ANemesisCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (AIController) {
+		AActor* PlayerA = Cast<AActor>(AIController->GetPlayerObject());
+		if (PlayerA) {
+			PlayerLastKnownLocation = PlayerA->GetTransform().GetLocation();
+			if ((PlayerLastKnownLocation - GetTransform().GetLocation()).Size() > PawnSensingComp->SightRadius) {
+				AIController->SetPlayerLost();
+			}
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -46,7 +57,7 @@ void ANemesisCharacter::OnPlayerCaught(APawn * Pawn)
 	ANemesisAIController* AIController = Cast<ANemesisAIController>(GetController());
 
 	if (AIController) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Player Caught"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, TEXT("Player Caught"));
 		AIController->SetPlayerCaught(Pawn);
 	}
 }

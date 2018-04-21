@@ -34,12 +34,18 @@ public:
 	int32 CurrentPatrolPoint = 0;
 
 	void SetPlayerCaught(APawn* Pawn);
+	void SetPlayerLost();
 
 	TArray<AActor*> GetPatrolPoints(int32 ID);
 
-	// Inline Getter Methods
+	// Getter Methods
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComp; }
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
 	FORCEINLINE int32 GetCurrentPathID() const { return CurrentPathID; }
+
+	FORCEINLINE FName GetPlayerKey() { return PlayerKey; }
+	UObject* GetPlayerObject();
+	// Setter Methods
 	FORCEINLINE void SetCurrentPathID(int32 newPathID) { CurrentPathID = newPathID; }
+
 };

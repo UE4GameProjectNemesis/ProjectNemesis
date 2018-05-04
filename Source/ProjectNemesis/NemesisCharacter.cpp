@@ -21,11 +21,14 @@ void ANemesisCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Sensing Setup
 	if (PawnSensingComp) {
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &ANemesisCharacter::OnPlayerCaught);
+		sightDelay = PawnSensingComp->SensingInterval + 0.1f; // Needs to be slighlty bigger than the actual sensing interval
 	}
-
+	// Controller Setup
 	AIController = Cast<ANemesisAIController>(GetController());
+
 
 }
 
@@ -38,11 +41,21 @@ void ANemesisCharacter::Tick(float DeltaTime)
 		AActor* PlayerA = Cast<AActor>(AIController->GetPlayerObject());
 		if (PlayerA) {
 			PlayerLastKnownLocation = PlayerA->GetTransform().GetLocation();
-			if ((PlayerLastKnownLocation - GetTransform().GetLocation()).Size() > PawnSensingComp->SightRadius) {
+			// Lose player whenever OnSeePawn() -> Not Seen
+			if (SeesPlayer == false) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Player Lost"));
 				AIController->SetPlayerLost();
 			}
 		}
 	}
+
+	// Set SeesPlayer = false after interval delay
+	sightTimer += GetWorld()->GetDeltaSeconds();
+	if (sightTimer > sightDelay) {	// The timer is reset if the player gets seen ('OnPlayerCaught()'), ...
+		SeesPlayer = false;			// ... this means that while it is in sight it will never enter the 'if()' condition
+	}
+	
+
 }
 
 // Called to bind functionality to input
@@ -54,6 +67,9 @@ void ANemesisCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void ANemesisCharacter::OnPlayerCaught(APawn * Pawn)
 {
+	SeesPlayer = true; // Always at the beginning
+	sightTimer = 0.f;  // ...
+
 	ANemesisAIController* AIController = Cast<ANemesisAIController>(GetController());
 
 	if (AIController) {

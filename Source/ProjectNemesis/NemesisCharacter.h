@@ -38,6 +38,7 @@ private:
 
 	// Sensing ---
 	FVector PlayerLastKnownLocation;
-	
-	
+	bool SeesPlayer = false;
+	float sightDelay = 0.f; // Max Time
+	float sightTimer = 0.f; // Actual Timer
 };
